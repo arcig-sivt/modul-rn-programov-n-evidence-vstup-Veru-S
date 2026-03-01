@@ -1,0 +1,37 @@
+from datetime import datetime
+
+# slovník karet -> jméno osoby (pokud chcete)
+cards = {
+    "123": "Jan",
+    "456": "Petr"
+}
+
+# historie: seznam záznamů
+history = []
+
+# stav, zda je karta aktuálně "uvnitř"
+inside = set()
+
+def process_card(card_id: str):
+    now = datetime.now()
+
+    # příchod
+    if card_id not in inside:
+        inside.add(card_id)
+        history.append(("in", card_id, now))
+        return "příchod zaznamenán"
+
+    # odchod
+    inside.remove(card_id)
+    history.append(("out", card_id, now))
+    return "odchod zaznamenán"
+
+
+def get_history():
+    return history
+
+
+# příklad použití
+print(process_card("123"))
+print(process_card("123"))
+print(get_history())
